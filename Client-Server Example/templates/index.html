@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+    Nama: <input type="text" name="name" id="nama">
+    <br><br>
+    Nim: <input type="number" name="nim" id="nim">
+    <br><br>
+    Alamat: <input type="text" name="alamat" id="alamat">
+    <br><br>
+    <button id="btn-submit" onclick="submitData()">Submit</button>
+    <div id="app" class="myclass"></div>
+
+    <br><br>
+    
+    <div id="table-container">
+        <table id="data-table">
+            <thead>
+                <tr>
+                    <th>Nama</th>
+                    <th>NIM</th>
+                    <th>Alamat</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+            </tbody>
+        </table>
+    </div>
+
+    
+
+    <script>
+        function submitData() {
+            let elementInputNama = document.getElementById('nama');
+            let elementInputNim = document.getElementById('nim');
+            let elementInputAlamat = document.getElementById('alamat');
+
+            let namaValue = elementInputNama.value;
+            let nimValue = elementInputNim.value;
+            let alamatValue = elementInputAlamat.value;
+
+            $.ajax({
+                url: '/send-data',
+                method: 'POST',
+                data: {
+                    nama: namaValue,
+                    nim: nimValue,
+                    alamat: alamatValue
+                },
+                success: function (response) {
+                    updateTable(response);
+                }
+            }).then(function () {
+                //TODO: LETAKKAN LOADING SELESAI
+            });
+
+        }
+
+        function updateTable(data) {
+            let tableBody = document.getElementById('table-body');
+            let newRow = `<tr>
+                            <td>${data.nama}</td>
+                            <td>${data.nim}</td>
+                            <td>${data.alamat}</td>
+                         </tr>`;
+            tableBody.innerHTML += newRow;
+        }
+    </script>
+</body>
+</html>

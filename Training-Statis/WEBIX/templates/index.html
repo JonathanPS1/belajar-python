@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://cdn.webix.com/edge/webix.css" type="text/css">
+    <script src="//cdn.webix.com/edge/webix.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <script type="text/javascript" charset="utf-8">
+        var form = webix.ui({
+            rows: [
+                {
+                    view: "form",
+                    id: "myform",
+                    elements: [
+                        { view: "text", id: "name", label: "Nama", name: "name" },
+                        { view: "text", id: "umur", label: "Umur", name: "umur" },
+                        { view: "text", id: "alamat", label: "Alamat", name: "alamat" },
+                        { view:"button", id:"btn", value:"Add", css:"webix_primary"},
+                        // {
+                        //     cols: [
+                        //         {
+                        //             view: "button", value: "Login", css: "webix_primary",
+                        //             on: {
+                        //                 onItemClick(id, event) {
+                        //                     var values = $$("myform").getValues();
+                        //                     webix
+                        //                         .ajax()
+                        //                         .post('/send-data', values)
+                        //                         .then(function (data) {
+                        //                             console.log(data.text());
+                        //                         });
+                        //                 }
+                        //             }
+                        //         },
+                        //         { view: "button", value: "Cancel" }
+                        //     ]
+                        // }
+                    ]
+                },
+                {
+                    view: "datatable",
+                    id: "mygrid",
+                    columns: [
+                        { id: "id", header: "", width: 50 },
+                        { id: "name", header: "Nama", width: 200 },
+                        { id: "umur", header: "Umur", width: 80 },
+                        { id: "alamat", header: "Alamat", width: 100 },
+                    ],
+                    data: [{
+                        "id": '01',
+                        "name": 'Jonathan',
+                        "umur": "20",
+                        "alamat": "FTI Blotongan",
+                    },
+                    {
+                        "id": '02',
+                        "name": 'Jojo',
+                        "umur": "21",
+                        "alamat": "Bandungan",
+                    }
+                ],
+                    on:
+                    {
+                        "onItemDblClick": function (param) {
+                            // window.alert("event berjalan")
+                            console.log(param)
+                            $$("myform").setValues($$("mygrid").getItem(param.row))
+                        }
+
+                    }
+                },
+            ]
+        });
+        webix.ready(function(){
+            $$("btn").attachEvent("onItemClick", function(){
+                window.alert("button clicked")
+            })
+        })
+    </script>
+</body>
+
+</html>
