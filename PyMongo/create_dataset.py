@@ -7,7 +7,7 @@ import datetime
 
 fake = Faker()
 
-client = pymongo.MongoClient("mongodb+srv://jonathansatria16:jovande16@cluster0.2pnpdog.mongodb.net/")
+client = pymongo.MongoClient("")
 db = client["db_kapita"]
 collection = db["students_collection"]
 
